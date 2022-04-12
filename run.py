@@ -24,6 +24,7 @@ class Choice:
         except ValueError as e:
             print(f"Invalid data: {e}, please try again. \n")
             return False
+        self.choice = int(self.choice)
         return True
 
 
@@ -34,13 +35,14 @@ class Scrap:
 
     def __init__(self, url, ident="", cla=""):
         """
+        Init class
         :param url: what page will be scrapped
         :param ident: html id that is needed  to be found
         :param cla: html class that is needed  to be found
         """
         self.url = url
-        self.ident = ident
-        self.cla = cla
+        self.id_html = ident
+        self.class_html = cla
         self.element = ""
 
     def request_page(self):
@@ -49,7 +51,7 @@ class Scrap:
     def make_soup(self):
         page = self.request_page()
         mix_soup = BeautifulSoup(page.content, "html.parser")
-        return mix_soup.find(id=self.ident)
+        return mix_soup.find(id=self.id_html)
 
 
 print("Welcome to . \n")
@@ -58,10 +60,12 @@ while True:
     if choice.validate_choice():
         print(choice.choice)
         print("Valid")
-        break
+
     if choice.choice == 1:
         scrap = Scrap("https://realpython.github.io/fake-jobs/", "ResultsContainer")
-        print(scrap.make_soup().prettify())
+        result = scrap.make_soup()
+        print(result.prettify())
         break
     else:
         print("foi pro else")
+        break
