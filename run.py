@@ -11,12 +11,12 @@ print(results.prettify())
 
 class Choice:
     """
-    Instance the user choice
-    :param choice: The menu choice, can be a number 1-6
+    Get menu choice from user and validate
+    :param option: The menu choice, can be a number 1-6
     """
 
-    def __init__(self, choice):
-        self.choice = choice
+    def __init__(self, option):
+        self.choice = option
 
     def validate_choice(self):
         """
@@ -36,8 +36,8 @@ class Choice:
 
 while True:
     print("Welcome to . \n")
-    number = input("Enter bla bla: \n")
-    choice = Choice(number)
+    option = input("Enter bla bla: \n")
+    choice = Choice(option)
     if choice.validate_choice():
         print("Valid")
         break
