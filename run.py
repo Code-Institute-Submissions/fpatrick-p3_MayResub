@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
-
+import numpy as np
 
 class Choice:
     """
@@ -9,7 +9,7 @@ class Choice:
     """
 
     def __init__(self, option):
-        self.choice = option
+        self.option = option
 
     def validate_choice(self):
         """
@@ -17,14 +17,14 @@ class Choice:
         :return: True if passes, False if except
         """
         try:
-            if int(self.choice) > 6:
+            if int(self.option) > 6:
                 raise ValueError(
-                    f"Please choose a number between 0 and 6, you provided {self.choice}"
+                    f"Please choose a number between 0 and 6, you provided {self.option}"
                 )
         except ValueError as e:
             print(f"Invalid data: {e}, please try again. \n")
             return False
-        self.choice = int(self.choice)
+        self.option = int(self.option)
         return True
 
 
@@ -33,7 +33,7 @@ class Scrap:
     Scrap a page looking for an id or class
     """
 
-    def __init__(self, url, ident="", cla=""):
+    def __init__(self, url, ident, cla=""):
         """
         Init class
         :param url: what page will be scrapped
@@ -46,6 +46,11 @@ class Scrap:
         self.element = ""
 
     def request_page(self):
+        headers = {
+            "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:99.0) Gecko/20100101 Firefox/99.0"
+        }
+        pega = requests.get(self.url,headers=headers)
+        print(pega.text)
         return requests.get(self.url)
 
     def make_soup(self):
@@ -58,13 +63,13 @@ print("Welcome to . \n")
 while True:
     choice = Choice(input("Enter bla bla: \n"))
     if choice.validate_choice():
-        print(choice.choice)
+        print(choice.option)
         print("Valid")
 
-    if choice.choice == 1:
-        scrap = Scrap("https://realpython.github.io/fake-jobs/", "ResultsContainer")
+    if choice.option == 1:
+        scrap = Scrap("https://www.amazon.co.uk/QNAP-TS-251-2GB-Network-attached-multimedia/dp/B015CDDPD8/?_encoding=UTF8&pd_rd_w=kzHMt&pf_rd_p=d49a09ba-36cd-426a-aae5-561eb64671fb&pf_rd_r=7CE001PPXRCVD79VG0YE&pd_rd_r=69968122-3dc7-4a74-9911-351a2ae1dc61&pd_rd_wg=WNEln&ref_=pd_gw_pd_aw_di_ci_int_sci_gw_atf_m_1", "Asellprice")
         result = scrap.make_soup()
-        print(result.prettify())
+        print(result)
         break
     else:
         print("foi pro else")
