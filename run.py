@@ -36,8 +36,8 @@ class Choice:
 
 while True:
     print("Welcome to . \n")
-    option = input("Enter bla bla: \n")
-    choice = Choice(option)
+    number = input("Enter bla bla: \n")
+    choice = Choice(number)
     if choice.validate_choice():
         print("Valid")
         break
