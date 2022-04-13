@@ -33,30 +33,58 @@ class Scrape:
     Scrap a page looking for an id or class
     """
 
-    def __init__(self, url, ident, cla=""):
+    def __init__(self, **kwargs):
         """
         Init class
         :param url: what page will be scrapped
         :param ident: html id that is needed  to be found
         :param cla: html class that is needed  to be found
         """
-        self.url = url
-        self.id_html = ident
-        self.class_html = cla
-        self.element = ""
+        self.url = kwargs["url"]
+        self.element = kwargs["element"]
+        self.attr = kwargs["attribute"]
+        self.name = kwargs["name"]
 
     def request_page(self):
         headers = {
             "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:99.0) Gecko/20100101 Firefox/99.0"
         }
-        pega = requests.get(self.url, headers=headers)
-        print(pega.text)
-        return requests.get(self.url)
+        return requests.get(self.url, headers=headers)
 
     def make_soup(self):
         page = self.request_page()
-        mix_soup = BeautifulSoup(page.content, "html.parser")
-        return mix_soup.find(id=self.id_html)
+        soup = BeautifulSoup(page.content, "lxml")
+        title = soup.find("span", attrs={"id": 'productTitle'})
+        # Inner NavigableString Object
+        title_value = title.string
+        # Title as a string value
+        title_string = title_value.strip()
+        # Printing types of values for efficient understanding
+        print(type(title))
+        print(type(title_value))
+        print(type(title_string))
+        print()
+
+        # Printing Product Title
+        print("Product Title = ", title_string)
+
+
+class Ecommerce(Scrape):
+    """
+
+    """
+    def __init__(self, **kwargs):
+        Scrape.__init__(self, **kwargs)
+
+    def amazon(self):
+        Scrape.request_page(self)
+        Scrape.make_soup(self)
+
+    def teste(self):
+        self.name = "aqui ganhou outro nome"
+        print(self.attr)
+        print(self.url)
+        print(self.name)
 
 
 print("Welcome to . \n")
@@ -68,12 +96,13 @@ while True:
 
     if choice.option == 1:
         scrape = Scrape("https://www.amazon.co.uk/QNAP-TS-251-2GB-Network-attached-multimedia/dp/B015CDDPD8/?_encoding"
-                      "=UTF8&pd_rd_w=kzHMt&pf_rd_p=d49a09ba-36cd-426a-aae5-561eb64671fb&pf_rd_r=7CE001PPXRCVD79VG0YE"
-                      "&pd_rd_r=69968122-3dc7-4a74-9911-351a2ae1dc61&pd_rd_wg=WNEln&ref_"
-                      "=pd_gw_pd_aw_di_ci_int_sci_gw_atf_m_1", "Asellprice")
-        result = scrape.make_soup()
-        print(result)
+                        "=UTF8&pd_rd_w=kzHMt&pf_rd_p=d49a09ba-36cd-426a-aae5-561eb64671fb&pf_rd_r=7CE001PPXRCVD79VG0YE"
+                        "&pd_rd_r=69968122-3dc7-4a74-9911-351a2ae1dc61&pd_rd_wg=WNEln&ref_"
+                        "=pd_gw_pd_aw_di_ci_int_sci_gw_atf_m_1", "Asellprice")
+        scrape.make_soup()
+
         break
-    else:
-        print("foi pro else")
+    elif choice.option == 2:
+        teste = Ecommerce(url="Essa eh a url", element="nao pode falta o element", attribute="o atributo", name="o nome")
+        teste.teste()
         break
