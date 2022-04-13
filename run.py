@@ -1,6 +1,5 @@
 import requests
 from bs4 import BeautifulSoup
-# import numpy as np
 
 
 class Choice:
@@ -68,10 +67,10 @@ while True:
         print("Valid")
 
     if choice.option == 1:
-        scrape = Scrape("https://www.amazon.co.uk/QNAP-TS-251-2GB-Network-attached-multimedia/dp/B015CDDPD8"
-                        "/?_encoding=UTF8&pd_rd_w=kzHMt&pf_rd_p=d49a09ba-36cd-426a-aae5-561eb64671fb&pf_rd_r"
-                        "=7CE001PPXRCVD79VG0YE&pd_rd_r=69968122-3dc7-4a74-9911-351a2ae1dc61&pd_rd_wg=WNEln&ref_"
-                        "=pd_gw_pd_aw_di_ci_int_sci_gw_atf_m_1", "Asellprice")
+        scrape = Scrape("https://www.amazon.co.uk/QNAP-TS-251-2GB-Network-attached-multimedia/dp/B015CDDPD8/?_encoding"
+                      "=UTF8&pd_rd_w=kzHMt&pf_rd_p=d49a09ba-36cd-426a-aae5-561eb64671fb&pf_rd_r=7CE001PPXRCVD79VG0YE"
+                      "&pd_rd_r=69968122-3dc7-4a74-9911-351a2ae1dc61&pd_rd_wg=WNEln&ref_"
+                      "=pd_gw_pd_aw_di_ci_int_sci_gw_atf_m_1", "Asellprice")
         result = scrape.make_soup()
         print(result)
         break
