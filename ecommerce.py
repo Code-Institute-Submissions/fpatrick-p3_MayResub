@@ -1,11 +1,11 @@
-import scrapping
+import scraper
 
 
-class Amazon(scrapping.Scrape):
+class Amazon(scraper.Scrapping):
 
     def __init__(self, url):
-        scrapping.Scrape.__init__(self, url)
-        self.soup = scrapping.Scrape.make_soup(self)
+        scraper.Scrapping.__init__(self, url)
+        self.soup = scraper.Scrapping.make_soup(self)
 
     def get_title(self):
         try:

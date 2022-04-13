@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 
 
-class Scrape:
+class Scrapping:
     """
     Scrap a page looking for an id or class
     """
