@@ -43,6 +43,7 @@ while True:
         print(product.get_title())
         print("Price:")
         print(product.get_price())
+        print(product.get_availability())
 
         break
     elif choice.option == 2:

@@ -39,6 +39,16 @@ class Amazon(scraper.Scrapping):
 
         return price
 
+    def get_availability(self):
+        try:
+            availability = self.soup.find("div", attrs={"id": 'availability'})
+            availability = availability.find("span").string.strip()
+
+        except AttributeError:
+            availability = ""
+
+        return availability
+
 
 class Argos(scraper.Scrapping):
 
