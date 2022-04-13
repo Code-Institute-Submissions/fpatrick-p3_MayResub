@@ -33,17 +33,14 @@ class Scrape:
     Scrap a page looking for an id or class
     """
 
-    def __init__(self, **kwargs):
+    def __init__(self, url):
         """
         Init class
         :param url: what page will be scrapped
         :param ident: html id that is needed  to be found
         :param cla: html class that is needed  to be found
         """
-        self.url = kwargs["url"]
-        self.element = kwargs["element"]
-        self.attr = kwargs["attribute"]
-        self.name = kwargs["name"]
+        self.url = url
 
     def request_page(self):
         headers = {
@@ -53,28 +50,48 @@ class Scrape:
 
     def make_soup(self):
         page = self.request_page()
-        soup = BeautifulSoup(page.content, "lxml")
-        title = soup.find("span", attrs={"id": 'productTitle'})
-        # Inner NavigableString Object
-        title_value = title.string
-        # Title as a string value
-        title_string = title_value.strip()
-        # Printing types of values for efficient understanding
-        print(type(title))
-        print(type(title_value))
-        print(type(title_string))
-        print()
-
-        # Printing Product Title
-        print("Product Title = ", title_string)
+        return BeautifulSoup(page.content, "lxml")
 
 
-class Ecommerce(Scrape):
+class Amazon(Scrape):
+
+    def __init__(self, url):
+        Scrape.__init__(self, url)
+        self.soup = Scrape.make_soup(self)
+
+    def get_title(self):
+        try:
+            # Outer Tag Object
+            title = self.soup.find("span", attrs={"id": 'productTitle'})
+
+            # Inner NavigableString Object
+            title_value = title.string
+
+            # Title as a string value
+            title_string = title_value.strip()
+
+            # # Printing types of values for efficient understanding
+            # print(type(title))
+            # print(type(title_value))
+            # print(type(title_string))
+            # print()
+
+        except AttributeError:
+            title_string = ""
+
+        return title_string
+
+
+class Keyword(Scrape):
     """
 
     """
     def __init__(self, **kwargs):
         Scrape.__init__(self, **kwargs)
+        self.url = kwargs["url"]
+        self.element = kwargs["element"]
+        self.attr = kwargs["attribute"]
+        self.name = kwargs["name"]
 
     def amazon(self):
         Scrape.request_page(self)
@@ -95,11 +112,11 @@ while True:
         print("Valid")
 
     if choice.option == 1:
-        scrape = Scrape("https://www.amazon.co.uk/QNAP-TS-251-2GB-Network-attached-multimedia/dp/B015CDDPD8/?_encoding"
+        product = Amazon("https://www.amazon.co.uk/QNAP-TS-251-2GB-Network-attached-multimedia/dp/B015CDDPD8/?_encoding"
                         "=UTF8&pd_rd_w=kzHMt&pf_rd_p=d49a09ba-36cd-426a-aae5-561eb64671fb&pf_rd_r=7CE001PPXRCVD79VG0YE"
                         "&pd_rd_r=69968122-3dc7-4a74-9911-351a2ae1dc61&pd_rd_wg=WNEln&ref_"
-                        "=pd_gw_pd_aw_di_ci_int_sci_gw_atf_m_1", "Asellprice")
-        scrape.make_soup()
+                        "=pd_gw_pd_aw_di_ci_int_sci_gw_atf_m_1")
+        print(product.get_title())
 
         break
     elif choice.option == 2:
