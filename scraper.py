@@ -20,7 +20,12 @@ class Scrapping:
         headers = {
             "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:99.0) Gecko/20100101 Firefox/99.0"
         }
-        return requests.get(self.url, headers=headers)
+        r = requests.get(self.url, headers=headers)
+
+        with open('test.html', 'w') as f:
+            f.write(r.text)
+            f.close()
+        return r
 
     def make_soup(self):
         page = self.request_page()
