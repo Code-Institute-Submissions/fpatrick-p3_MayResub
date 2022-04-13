@@ -39,10 +39,14 @@ while True:
                         "=UTF8&pd_rd_w=kzHMt&pf_rd_p=d49a09ba-36cd-426a-aae5-561eb64671fb&pf_rd_r=7CE001PPXRCVD79VG0YE"
                         "&pd_rd_r=69968122-3dc7-4a74-9911-351a2ae1dc61&pd_rd_wg=WNEln&ref_"
                         "=pd_gw_pd_aw_di_ci_int_sci_gw_atf_m_1")
+        print("Title:")
         print(product.get_title())
+        print("Price:")
+        print(product.get_price())
 
         break
     elif choice.option == 2:
-        teste = Ecommerce(url="Essa eh a url", element="nao pode falta o element", attribute="o atributo", name="o nome")
-        teste.teste()
+        teste = ecommerce.Argos("https://www.argos.ie/static/Product/partNumber/2803748.htm")
+        print(teste.get_title())
+        print(teste.get_price())
         break

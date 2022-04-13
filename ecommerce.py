@@ -28,3 +28,40 @@ class Amazon(scraper.Scrapping):
             title_string = ""
 
         return title_string
+
+    def get_price(self):
+
+        try:
+            price = self.soup.find("span", attrs={'class': 'a-offscreen'}).string.strip()
+
+        except AttributeError:
+            price = "Error getting the price. Is the product available?"
+
+        return price
+
+
+class Argos(scraper.Scrapping):
+
+    def __init__(self, url):
+        scraper.Scrapping.__init__(self, url)
+        self.soup = scraper.Scrapping.make_soup(self)
+
+    def get_title(self):
+        try:
+            title = self.soup.find("div", attrs={"id": 'primaryproductinfo'})
+            title = title.find("h1").string.strip()
+
+        except AttributeError:
+            title = ""
+
+        return title
+
+    def get_price(self):
+
+        try:
+            price = self.soup.find("span", attrs={'class': 'price'}).string.strip()
+
+        except AttributeError:
+            price = "Error getting the price. Is the product available?"
+
+        return price
