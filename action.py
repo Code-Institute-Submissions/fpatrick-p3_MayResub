@@ -1,11 +1,16 @@
-class Validate:
+import scraper
+
+
+class Validate(scraper.Scrapping):
     """
     Get menu choice from user and validate
     :param option: The menu choice, can be a number 1-6
     """
     def __init__(self):
+        scraper.Scrapping.__init__(self)
         self.choice = 99
-        self.number = 99
+        self.price = 99
+        self.url = ""
 
     def ask_choice(self, limit):
         """
@@ -26,10 +31,18 @@ class Validate:
     def ask_price(self):
         while True:
             try:
-                self.number = int(input("Please enter desired price: \n"))
+                self.price = int(input("Please enter desired price: \n"))
                 return False
             except ValueError as e:
                 print(f"Invalid data! Please enter only numbers and try again. \n")
+
+    def ask_page(self):
+        self.url = input("Please enter the URL: \n")
+        try:
+            return self.make_soup(self.url)
+        except:
+            print(f"URL Couldn't be reached! Please verify and try again. \n")
+            return False
 
 
 class User:
