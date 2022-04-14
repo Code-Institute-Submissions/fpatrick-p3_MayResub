@@ -3,6 +3,7 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
+
 class Validate(scraper.Scrapping):
     """
     Get menu choice from user and validate
@@ -11,7 +12,7 @@ class Validate(scraper.Scrapping):
     def __init__(self):
         scraper.Scrapping.__init__(self)
         self.choice = 99
-        self.price = 99
+        self.desired_price = 99.99
         self.url = ""
 
     def ask_choice(self, limit):
@@ -33,7 +34,7 @@ class Validate(scraper.Scrapping):
     def ask_price(self):
         while True:
             try:
-                self.price = int(input("Please enter desired price: \n"))
+                self.desired_price = float(input("Please enter desired price: \n"))
                 return False
             except ValueError as e:
                 print(f"Invalid data! Please enter only numbers and try again. \n")
@@ -46,6 +47,16 @@ class Validate(scraper.Scrapping):
             print(f"URL Couldn't be reached! Please verify and try again. \n")
             return False
 
+    def check_price(self, price):
+        price = price.replace('€', '')
+        price = price.replace('£', '')
+        price = float(price)
+
+        if price <= self.desired_price:
+            return True
+        else:
+            return False
+
 
 class User:
 
@@ -56,8 +67,8 @@ class User:
     def __init__(self):
         self.url = ""
         self.title = ""
-        self.desired_price = 0
-        self.price = 0
+        self.desired_price = 00.00
+        self.price = 00.00
         self.email = ""
         self.html = ""
 
@@ -76,7 +87,7 @@ class User:
             server.sendmail(self.from_email, self.email, message.as_string())
             server.quit()
         except:
-            print(" ************ SMPT server connection error ************ ")
+            print(" ************ SMTP server connection error ************ ")
 
     def alert_price(self):
         self.html = f"""

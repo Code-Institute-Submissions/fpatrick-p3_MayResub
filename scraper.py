@@ -10,9 +10,6 @@ class Scrapping:
     def __init__(self):
         """
         Init class
-        :param url: what page will be scrapped
-        :param ident: html id that is needed  to be found
-        :param cla: html class that is needed  to be found
         """
         self.url = ""
 

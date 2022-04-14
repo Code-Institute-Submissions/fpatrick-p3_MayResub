@@ -5,7 +5,7 @@ import action
 print("Welcome to Wescraper \n")
 # While True to easily restart script
 while True:
-    print("Enter option: 1. Track e-commerces price. | 2. Test")
+    print("Enter option: 1. Track e-commerces price. | 2. Advanced mode (keyword search)")
     # Instance validations class
     validate = action.Validate()
     # Ask to pick a number, param limit number os choices
@@ -19,7 +19,7 @@ while True:
             # Ask and validate a price
             validate.ask_price()
             # User object store price
-            user.amazon_price = validate.price
+            user.amazon_price = validate.desired_price
             # Ask url and return soup, receive false if except
             page = validate.ask_page()
             # If not except
@@ -33,7 +33,7 @@ while True:
                 break
         elif validate.choice == 2:
             validate.ask_price()
-            user.argos_price = validate.price
+            user.argos_price = validate.desired_price
             page = validate.ask_page()
             if page:
                 product = ecommerce.Argos(page)
@@ -42,7 +42,7 @@ while True:
                 break
         elif validate.choice == 3:
             validate.ask_price()
-            user.currys_price = validate.price
+            user.currys_price = validate.desired_price
             page = validate.ask_page()
             if page:
                 product = ecommerce.Currys(page)
@@ -51,13 +51,12 @@ while True:
                 break
 
     if validate.choice == 2:
-        user = action.User()
-        user.url = "http://osite.com"
-        user.email = "dopync@gmail.com"
-        user.desired_price = 32
-        user.price = 12
-        user.title = "Casinha de cocozinho"
+        valor = "€53.98"
+        validate.ask_price()
+        if validate.check_price(valor):
+            print("Price dropped")
+            break
 
-        user.alert_price()
+        break
 
 
