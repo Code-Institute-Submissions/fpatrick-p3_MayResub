@@ -1,11 +1,12 @@
 import ecommerce
 import findany
 import action
+import time
 
 print("Welcome to Wescraper \n")
 # While True to easily restart script
 while True:
-    print("Enter option: 1. Track e-commerces price. | 2. Advanced mode (keyword search)")
+    print("Enter option: 1. Track e-commerces price. | 2. Advanced mode (keyword search) | 0. Exit")
     # Instance validations class
     validate = action.Validate()
     # Ask to pick a number, param limit number os choices
@@ -15,25 +16,42 @@ while True:
         validate.ask_choice(3)
         # Instance user class to store data and be able to retrieve later
         user = action.User()
+
         if validate.choice == 1:
             # Ask and validate a price
             validate.ask_price()
-            # User object store price
-            user.amazon_price = validate.desired_price
-            # Ask url and return soup, receive false if except
-            page = validate.ask_page()
-            # If not except
-            if page:
-                product = ecommerce.Amazon(page)
-                print("Title:")
-                print(product.title())
-                print("Price:")
-                print(product.price())
-                print(product.availability())
-                break
+            validate.ask_email()
+
+            while True:
+                # Ask url and return soup, receive false if except
+                page = validate.ask_page()
+                # If not except
+                if page:
+                    product = ecommerce.Amazon(page)
+
+                    user.title = product.title()
+                    user.desired_price = validate.desired_price
+                    user.email = validate.email
+                    user.availability = product.availability()
+                    low_price = validate.check_price(product.price())
+                    user.price = validate.price
+                    if low_price:
+                        print("Low price, good")
+                        exit()
+                    else:
+                        print("High price")
+                        print(f"title: {user.title}")
+                        print(f"price: {user.price}")
+                        print(f"desired: {user.desired_price}")
+                        print(f"email: {user.email}")
+
+                        time.sleep(48)
+                else:
+                    break
+
         elif validate.choice == 2:
             validate.ask_price()
-            user.argos_price = validate.desired_price
+            user.desired_price = validate.desired_price
             page = validate.ask_page()
             if page:
                 product = ecommerce.Argos(page)
@@ -42,7 +60,7 @@ while True:
                 break
         elif validate.choice == 3:
             validate.ask_price()
-            user.currys_price = validate.desired_price
+            user.desired_price = validate.desired_price
             page = validate.ask_page()
             if page:
                 product = ecommerce.Currys(page)
@@ -51,12 +69,12 @@ while True:
                 break
 
     if validate.choice == 2:
-        valor = "€53.98"
-        validate.ask_price()
-        if validate.check_price(valor):
-            print("Price dropped")
+        while True:
+            print("Passou na linha 1")
+            time.sleep(5)
+            print("passou linha 2")
+            time.sleep(5)
             break
 
+    if validate.choice == 0:
         break
-
-
