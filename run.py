@@ -54,7 +54,7 @@ while True:
             print(product.price())
             break
         elif choice.option == 3:
-            product = ecommerce.HN("https://www.harveynorman.ie/tvs-headphones/hd-tvs/all-tvs/samsung-q60a-65-4k-ultra-hd-hdr-qled-smart-tv-2021-qe65q60aauxxu.html")
+            product = ecommerce.Smiths("https://www.currys.ie/ieen/tv-and-home-entertainment/televisions/televisions/samsung-ue43au7100kxxu-43-smart-4k-ultra-hd-hdr-led-tv-10222296-pdt.html")
             print(product.title())
             print(f"They sell for: {product.price()}")
             break

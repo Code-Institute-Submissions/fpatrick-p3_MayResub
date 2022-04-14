@@ -63,7 +63,7 @@ class Argos(scraper.Scrapping):
         return price
 
 
-class HN(scraper.Scrapping):
+class Currys(scraper.Scrapping):
 
     def __init__(self, url):
         scraper.Scrapping.__init__(self, url)
@@ -71,7 +71,7 @@ class HN(scraper.Scrapping):
 
     def title(self):
         try:
-            title = self.soup.find("div", attrs={"class": 'productNamecustm'}).string.strip()
+            title = self.soup.find("div", attrs={"class": 'prd-name'}).string.strip()
         except AttributeError:
             title = ""
 
@@ -80,7 +80,7 @@ class HN(scraper.Scrapping):
     def price(self):
 
         try:
-            price = self.soup.find("span", attrs={'class': 'price'}).string.strip()
+            price = self.soup.find("strong", attrs={'class': 'current'}).string.strip()
 
         except AttributeError:
             price = "Error getting the price. Is the product available?"
