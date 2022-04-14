@@ -27,6 +27,7 @@ while True:
                     product = ecommerce.Amazon(page)
                     # Instance user class to store data and be able to retrieve later
                     user = action.User()
+                    user.url = validate.url
                     user.title = product.title()
                     user.desired_price = validate.desired_price
                     user.email = validate.email

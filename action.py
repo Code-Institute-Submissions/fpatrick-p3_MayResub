@@ -6,9 +6,8 @@ from email.mime.multipart import MIMEMultipart
 
 class User:
 
-    login = 'wescraper.message@outlook.com'
-    password = 'HzKEwEi5j%z$fgAjtuK8S'
-    from_email = 'wescraper.message@outlook.com'
+    api = 'HzKEwEi5j%z$fgAjtuK8S'
+    sender = 'wescraper.message@outlook.com'
 
     def __init__(self):
         self.url = ""
@@ -30,8 +29,8 @@ class User:
             server = smtplib.SMTP('smtp.office365.com', 587)
             server.ehlo()
             server.starttls()
-            server.login(self.login, self.password)
-            server.sendmail(self.from_email, self.email, message.as_string())
+            server.login(self.sender, self.api)
+            server.sendmail(self.sender, self.email, message.as_string())
             server.quit()
         except:
             print(" ************ SMTP server connection error ************ ")
