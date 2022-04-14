@@ -14,20 +14,18 @@ class Scrapping:
         :param cla: html class that is needed  to be found
         """
         self.url = url
+        self.page = self.request_page()
 
     def request_page(self):
         headers = {
             "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:99.0) Gecko/20100101 Firefox/99.0"
         }
+        print("passou aqui")
+        return requests.get(self.url, headers=headers)
 
-        r = requests.get(self.url, headers=headers)
-        with open('test.html', 'w') as f:
-            f.write(r.text)
-            f.close()
-
-        return r
-        #return requests.get(self.url, headers=headers)
+        #with open('test.html', 'w') as f:
+        #    f.write(self.page.text)
+        #    f.close()
 
     def make_soup(self):
-        page = self.request_page()
-        return BeautifulSoup(page.content, "lxml")
+        return BeautifulSoup(self.page.content, "lxml")

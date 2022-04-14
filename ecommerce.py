@@ -1,11 +1,10 @@
 import scraper
 
 
-class Amazon(scraper.Scrapping):
+class Amazon:
 
-    def __init__(self, url):
-        scraper.Scrapping.__init__(self, url)
-        self.soup = scraper.Scrapping.make_soup(self)
+    def __init__(self, page):
+        self.soup = page
 
     def title(self):
         try:
@@ -36,11 +35,10 @@ class Amazon(scraper.Scrapping):
         return availability
 
 
-class Argos(scraper.Scrapping):
+class Argos:
 
-    def __init__(self, url):
-        scraper.Scrapping.__init__(self, url)
-        self.soup = scraper.Scrapping.make_soup(self)
+    def __init__(self, page):
+        self.soup = page
 
     def title(self):
         try:
@@ -63,11 +61,10 @@ class Argos(scraper.Scrapping):
         return price
 
 
-class Currys(scraper.Scrapping):
+class Currys:
 
-    def __init__(self, url):
-        scraper.Scrapping.__init__(self, url)
-        self.soup = scraper.Scrapping.make_soup(self)
+    def __init__(self, page):
+        self.soup = page
 
     def title(self):
         try:

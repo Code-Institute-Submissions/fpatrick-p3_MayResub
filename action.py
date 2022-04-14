@@ -14,7 +14,7 @@ class Validate:
         """
         while True:
             try:
-                self.choice = int(input("1-2: "))
+                self.choice = int(input(f"1-{limit}: "))
                 if self.choice > limit:
                     raise ValueError(
                         f"Please choose a number between 0 and {limit}! You provided {self.choice}"
