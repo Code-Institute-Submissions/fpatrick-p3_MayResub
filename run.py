@@ -10,7 +10,7 @@ while True:
     choice.ask_choice()
     if choice.choice == 1:
         print("Enter option: 1. Amazon. | 2. Argos | 3. Currys")
-        choice.ask_choice()
+        choice.ecommerce_choice()
 
         user = action.User()
         if choice.choice == 1:
