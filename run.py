@@ -19,7 +19,7 @@ while True:
         if validate.choice == 1:
             # Ask and validate a price
             validate.ask_price()
-            # User instance store price
+            # User object store price
             user.amazon_price = validate.price
             # Ask url and return soup, receive false if except
             page = validate.ask_page()
@@ -34,7 +34,7 @@ while True:
                 break
         elif validate.choice == 2:
             validate.ask_price()
-            user.amazon_price = validate.price
+            user.argos_price = validate.price
             page = validate.ask_page()
             if page:
                 product = ecommerce.Argos(page)
@@ -43,7 +43,7 @@ while True:
                 break
         elif validate.choice == 3:
             validate.ask_price()
-            user.amazon_price = validate.price
+            user.currys_price = validate.price
             page = validate.ask_page()
             if page:
                 product = ecommerce.Currys(page)
@@ -51,6 +51,14 @@ while True:
                 print(product.price())
                 break
 
+    if validate.choice == 2:
+        user = action.User()
+        user.url = "http://osite.com"
+        user.email = "dopync@gmail.com"
+        user.desired_price = 32
+        user.price = 12
+        user.title = "Casinha de cocozinho"
 
+        user.alert_price()
 
 

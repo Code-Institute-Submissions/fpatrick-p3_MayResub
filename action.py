@@ -1,5 +1,11 @@
 import scraper
+import smtplib
 
+import email
+from email import encoders
+from email.mime.base import MIMEBase
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 class Validate(scraper.Scrapping):
     """
@@ -46,12 +52,50 @@ class Validate(scraper.Scrapping):
 
 
 class User:
-    def __init__(self):
-        self.amazon_url = ""
-        self.amazon_price = 0
-        self.argos_url = ""
-        self.argos_price = 0
-        self.currys_url = ""
-        self.currys_price = 0
 
+    login = 'wescraper.message@outlook.com'
+    password = 'HzKEwEi5j%z$fgAjtuK8S'
+    from_email = 'wescraper.message@outlook.com'
+
+    def __init__(self):
+        self.url = ""
+        self.title = ""
+        self.desired_price = 0
+        self.price = 0
+        self.email = ""
+        self.html = ""
+
+    def send_email(self):
+        convert = MIMEText(self.html, 'html')
+        message = MIMEMultipart("alternative")
+        message.attach(convert)
+        message['Subject'] = f'Wescrape: "{self.title}" price dropped! '
+        message['From'] = self.from_email
+        message['To'] = self.email
+        try:
+            server = smtplib.SMTP('smtp.office365.com', 587)
+            server.ehlo()
+            server.starttls()
+            server.login(self.login, self.password)
+            server.sendmail(self.from_email, self.email, message.as_string())
+            server.quit()
+        except:
+            print(" ************ SMPT server connection error ************ ")
+
+    def alert_price(self):
+        self.html = f"""
+                    <html>
+                      <body>
+                        <h2> Good news! The price dropped. </h2>
+                        <p><b></b>
+                           You have been waiting to buy <b>{self.title}</b> for <b>€{self.desired_price}</b>.
+                           <br>
+                           <h3>The price right now is <b>€{self.price}</b></h3>
+                           <br>
+                           Time to run and buy it: <b>{self.url}</b>
+                        </p>
+                      </body>
+                    </html>
+                """
+        self.send_email()
 
