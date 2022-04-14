@@ -1,9 +1,5 @@
 import scraper
 import smtplib
-
-import email
-from email import encoders
-from email.mime.base import MIMEBase
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
@@ -69,7 +65,7 @@ class User:
         convert = MIMEText(self.html, 'html')
         message = MIMEMultipart("alternative")
         message.attach(convert)
-        message['Subject'] = f'Wescrape: "{self.title}" price dropped! '
+        message['Subject'] = f'Wescraper: "{self.title}" price dropped! '
         message['From'] = self.from_email
         message['To'] = self.email
         try:

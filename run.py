@@ -1,7 +1,6 @@
 import ecommerce
 import findany
 import action
-import scraper
 
 print("Welcome to Wescraper \n")
 # While True to easily restart script
