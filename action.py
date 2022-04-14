@@ -4,24 +4,24 @@ class Validate:
     :param option: The menu choice, can be a number 1-6
     """
     def __init__(self):
-        self.choice = ""
+        self.choice = 0
         self.number = 0
 
-    def validate_choice(self, choice):
+    def ask_choice(self):
         """
         Convert choice to int, raise exception if wrong option or can't be converted
         :return: True if passes, False if except
         """
-        try:
-            if int(choice) > 6:
-                raise ValueError(
-                    f"Please choose a number between 0 and 6! You provided {choice}"
-                )
-        except ValueError as e:
-            print(f"Invalid data: {e}, please try again. \n")
-            return False
-        self.choice = int(choice)
-        return True
+        while True:
+            try:
+                self.choice = int(input("1-2: "))
+                if int(self.choice) > 6:
+                    raise ValueError(
+                        f"Please choose a number between 0 and 6! You provided {self.choice}"
+                    )
+                return False
+            except ValueError as e:
+                print(f"Please choose a number between 0 and 6! You provided invalid data: {e}\n")
 
     def ask_price(self):
         while True:
