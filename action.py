@@ -7,7 +7,7 @@ class Validate:
         self.choice = 99
         self.number = 99
 
-    def ask_choice(self):
+    def ask_choice(self, limit):
         """
         Convert choice to int, raise exception if wrong option or can't be converted
         :return: True if passes, False if except
@@ -15,29 +15,13 @@ class Validate:
         while True:
             try:
                 self.choice = int(input("1-2: "))
-                if self.choice > 6:
+                if self.choice > limit:
                     raise ValueError(
-                        f"Please choose a number between 0 and 6! You provided {self.choice}"
+                        f"Please choose a number between 0 and {limit}! You provided {self.choice}"
                     )
                 return False
             except ValueError as e:
-                print(f"Please choose a number between 0 and 6! You provided invalid data: {e}\n")
-
-    def ecommerce_choice(self):
-        """
-        Convert choice to int, raise exception if wrong option or can't be converted
-        :return: True if passes, False if except
-        """
-        while True:
-            try:
-                self.choice = int(input("1-2: "))
-                if self.choice > 6:
-                    raise ValueError(
-                        f"Please choose a number between 0 and 6! You provided {self.choice}"
-                    )
-                return False
-            except ValueError as e:
-                print(f"Please choose a number between 0 and 6! You provided invalid data: {e}\n")
+                print(f"Please choose a number between 0 and {limit}! You provided invalid data: {e}\n")
 
     def ask_price(self):
         while True:

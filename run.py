@@ -7,10 +7,10 @@ print("Welcome to Wescraper \n")
 while True:
     print("Enter option: 1. Track e-commerces price. | 2. Test")
     choice = action.Validate()
-    choice.ask_choice()
+    choice.ask_choice(2)
     if choice.choice == 1:
         print("Enter option: 1. Amazon. | 2. Argos | 3. Currys")
-        choice.ecommerce_choice()
+        choice.ask_choice(3)
 
         user = action.User()
         if choice.choice == 1:
