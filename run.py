@@ -14,9 +14,6 @@ while True:
     if validate.choice == 1:
         print("Enter option: 1. Amazon. | 2. Argos | 3. Currys")
         validate.ask_choice(3)
-        # Instance user class to store data and be able to retrieve later
-        user = action.User()
-
         if validate.choice == 1:
             # Ask and validate a price
             validate.ask_price()
@@ -28,7 +25,8 @@ while True:
                 # If not except
                 if page:
                     product = ecommerce.Amazon(page)
-
+                    # Instance user class to store data and be able to retrieve later
+                    user = action.User()
                     user.title = product.title()
                     user.desired_price = validate.desired_price
                     user.email = validate.email
