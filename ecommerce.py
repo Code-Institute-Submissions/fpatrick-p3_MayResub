@@ -2,7 +2,9 @@ import scraper
 
 
 class Amazon:
-
+    """
+    Search amazon page for product name, price and availability
+    """
     def __init__(self, page):
         self.soup = page
 

@@ -5,7 +5,9 @@ from email.mime.multipart import MIMEMultipart
 
 
 class User:
-
+    """
+    Store all user input data for send email and rerun last query
+    """
     api = 'HzKEwEi5j%z$fgAjtuK8S'
     sender = 'wescraper.message@outlook.com'
 
@@ -90,10 +92,10 @@ class User:
 
 class Validate(scraper.Scrapping):
     """
-    Get menu choice from user and validate
-    :param: The menu choice, can be a number 1-6
+    Get inputs from user and validate it when necessary
     """
     def __init__(self):
+        # Inherit scrapping to request and validate page
         scraper.Scrapping.__init__(self)
         self.choice = 99
         self.url = ""
