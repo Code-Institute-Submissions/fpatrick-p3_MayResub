@@ -57,7 +57,10 @@ class User:
                       </body>
                     </html>
                 """
-        self.send_email(subject)
+        if self.send_email(subject):
+            return True
+        else:
+            return False
 
     def alert_keyword(self, tags):
         subject = f'Wescraper: Keywords found for "{self.keyword}"'
