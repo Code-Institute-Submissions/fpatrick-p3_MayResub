@@ -69,8 +69,8 @@ while True:
 
     if validate.choice == 2:
         soup = validate.ask_page()
-        find = findany.Keyword(soup, "Firestick")
-        find.teste()
+        find = findany.Keyword(soup, "Hello")
+        find.teste2()
 
     if validate.choice == 0:
         break

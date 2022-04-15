@@ -111,7 +111,6 @@ class Validate(scraper.Scrapping):
         price = price.replace('€', '')
         price = price.replace('£', '')
         self.price = float(price)
-        print(f"ese eh o pricce arrumado {price}")
 
         if self.price <= self.desired_price:
             return True
