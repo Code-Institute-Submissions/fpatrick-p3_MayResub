@@ -17,6 +17,7 @@ class User:
         self.availability = ""
         self.email = ""
         self.html = ""
+        self.keyword = ""
 
     def send_email(self):
         convert = MIMEText(self.html, 'html')
@@ -74,7 +75,7 @@ class Validate(scraper.Scrapping):
         while True:
             try:
                 self.choice = int(input(f"0-{limit}: "))
-                if self.choice > limit:
+                if self.choice > limit and self.choice != 9:
                     raise ValueError(
                         f"Please choose a number between 0 and {limit}! You provided {self.choice}"
                     )

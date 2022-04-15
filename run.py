@@ -2,6 +2,7 @@ import ecommerce
 import findany
 import action
 import time
+import pickle
 
 print("Welcome to Wescraper \n")
 # While True to easily restart script
@@ -70,13 +71,34 @@ while True:
             continue
 
     if validate.choice == 2:
-        print("\nEnter option: 1. Search keyword by href. | 2. Search keyword by custom html element. | 0. Restart Script")
+        print("\nEnter option: 1. Search keyword by href. | 2. Search keyword by custom html element. | 9. Repeat last keyword search | 0. Restart Script")
         validate.ask_choice(2)
         if validate.choice == 1:
-            soup = validate.ask_page()
-            find = findany.Keyword(soup, "Hello")
+            page = validate.ask_page()
+            if page:
+                user = action.User()
+                user.keyword = input("Please enter a keyword:\n")
+                user.url = validate.url
+
+                with open('last_query.obj', 'wb') as file:
+                    pickle.dump(user, file)
+
+                query = findany.Keyword(page, user.keyword)
+                query.find()
         elif validate.choice == 2:
             keyword = "key"
+        elif validate.choice == 9:
+            try:
+                with open('last_query.obj', 'rb') as file:
+                    user = pickle.load(file)
+            except:
+                print("Deu ruim abrindo o arquivo la")
+                pass
+            validate.url = user.url
+            page = validate.ask_page()
+            if page:
+                query = findany.Keyword(page, user.keyword)
+                query.find()
         elif validate.choice == 0:
             continue
 
