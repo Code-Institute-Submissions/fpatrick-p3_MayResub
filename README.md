@@ -74,9 +74,9 @@ Live link: https://wescraper.herokuapp.com/
 
 ## Limitations
 
-#### Websites can block Wescraper, especially if many query comes from same IP within a small-time frame
-#### Websites can block bots like Wescraper
-#### The SMTP server can only send a limited number of emails daily (around 100)
+* Websites can block Wescraper, especially if many query comes from same IP within a small-time frame
+* Websites can block bots like Wescraper
+* The SMTP server can only send a limited number of emails daily (around 100)
 
 ## Testing 
 
