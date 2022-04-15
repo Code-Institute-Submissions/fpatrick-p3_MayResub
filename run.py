@@ -29,6 +29,12 @@ def run_ecommerce(validate, user, class_name, av='n'):
                 user.availability = product.availability()
             low_price = validate.compare_price(product.price())
             user.price = validate.price
+            try:
+                with open('last_query.obj', 'wb') as file:
+                    pickle.dump(user, file)
+            except:
+                print("Warning: Error saving data to repeat query later. Script will continue normally")
+                pass
             if low_price:
                 print(f"\nFound: {user.title} for €{user.price}")
                 user.alert_price()
@@ -37,6 +43,43 @@ def run_ecommerce(validate, user, class_name, av='n'):
             else:
                 print(f"\nFound: {user.title} for €{user.price}")
                 print("Querying again in 10 minutes. Stop terminal to stop running (Ctrl + C on linux).")
+                time.sleep(48)
+        else:
+            break
+
+
+def run_query(validate, user):
+    user.keyword = input("Please enter a keyword:\n").lower()
+    validate.ask_email()
+    user.email = validate.email
+    while True:
+        page = validate.ask_page()
+        if page:
+            user.url = validate.url
+            try:
+                with open('last_query.obj', 'wb') as file:
+                    pickle.dump(user, file)
+            except:
+                print("Warning: Error saving data to repeat query later. Script will continue normally")
+                pass
+            query = findany.Keyword(page, user.keyword)
+            tags = query.find()
+            last_tag = None
+            if tags:
+                for tag in tags:
+                    if last_tag != tag.text:
+                        if tag['href'][0] == 'h':
+                            print(f"\nFound: {tag.text}")
+                            print(f"Url: {tag['href']}")
+                            last_tag = tag.text
+                if user.alert_keyword(tags):
+                    print("Keyword match successful. Email sent. Exiting application...")
+                else:
+                    print("Keyword match successful. But couldn't send email. Exiting application...")
+                exit()
+            else:
+                print("\nResults not found.")
+                print("Querying again in 10 minutes. To Stop running, stop terminal (Ctrl + C on linux).")
                 time.sleep(48)
         else:
             break
@@ -72,40 +115,7 @@ while True:
         validate.ask_choice(2)
         if validate.choice == 1:
             user = action.User()
-            user.keyword = input("Please enter a keyword:\n").lower()
-            validate.ask_email()
-            user.email = validate.email
-            while True:
-                page = validate.ask_page()
-                if page:
-                    user.url = validate.url
-                    try:
-                        with open('last_query.obj', 'wb') as file:
-                            pickle.dump(user, file)
-                    except:
-                        print("Warning: Error saving data to repeat query later. Script will continue normally")
-                        pass
-                    query = findany.Keyword(page, user.keyword)
-                    tags = query.find()
-                    last_tag = None
-                    if tags:
-                        for tag in tags:
-                            if last_tag != tag.text:
-                                if tag['href'][0] == 'h':
-                                    print(f"\nFound: {tag.text}")
-                                    print(f"Url: {tag['href']}")
-                                    last_tag = tag.text
-                        if user.alert_keyword(tags):
-                            print("Keyword match successful. Email sent. Exiting application...")
-                        else:
-                            print("Keyword match successful. But couldn't send email. Exiting application...")
-                        exit()
-                    else:
-                        print("\nResults not found.")
-                        print("Querying again in 10 minutes. To Stop running, stop terminal (Ctrl + C on linux).")
-                        time.sleep(48)
-                else:
-                    break
+            run_query(validate, user)
 
         elif validate.choice == 2:
             keyword = "key"
