@@ -4,6 +4,45 @@ import action
 import time
 import pickle
 
+
+def run_ecommerce(validate, class_name, av='n'):
+    validate.ask_price()
+    validate.ask_email()
+
+    while True:
+        # Ask url and return soup, receive false if except
+        page = validate.ask_page()
+        # If not except
+        if page:
+            if class_name == 'amazon':
+                product = ecommerce.Amazon(page)
+            elif class_name == 'argos':
+                product = ecommerce.Argos(page)
+            elif class_name == 'currys':
+                product = ecommerce.Currys(page)
+            # Instance user class to store data and be able to retrieve later
+            user = action.User()
+            user.url = validate.url
+            user.title = product.title()
+            user.desired_price = validate.desired_price
+            user.email = validate.email
+            if av == 'y':
+                user.availability = product.availability()
+            low_price = validate.compare_price(product.price())
+            user.price = validate.price
+            if low_price:
+                print(f"\nFound: {user.title} for €{user.price}")
+                user.alert_price()
+                print("Price match successful. Email sent. Exiting application...")
+                exit()
+            else:
+                print(f"\nFound: {user.title} for €{user.price}")
+                print("Querying again in 10 minutes. Stop terminal to stop running (Ctrl + C on linux).")
+                time.sleep(48)
+        else:
+            print("\nError fetching the URL.")
+            break
+
 print("Welcome to Wescraper \n")
 # While True to easily restart script
 while True:
@@ -18,56 +57,11 @@ while True:
         validate.ask_choice(3)
         if validate.choice == 1:
             # Ask and validate a price
-            validate.ask_price()
-            validate.ask_email()
-
-            while True:
-                # Ask url and return soup, receive false if except
-                page = validate.ask_page()
-                # If not except
-                if page:
-                    product = ecommerce.Amazon(page)
-                    # Instance user class to store data and be able to retrieve later
-                    user = action.User()
-                    user.url = validate.url
-                    user.title = product.title()
-                    user.desired_price = validate.desired_price
-                    user.email = validate.email
-                    user.availability = product.availability()
-                    low_price = validate.compare_price(product.price())
-                    user.price = validate.price
-                    if low_price:
-                        print(f"\nFound: {user.title} for €{user.price}")
-                        user.alert_price()
-                        print("Price match successful. Email sent. Exiting application...")
-                        exit()
-                    else:
-                        print(f"\nFound: {user.title} for €{user.price}")
-                        print("Querying again in 10 minutes. Stop terminal to stop running (Ctrl + C on linux).")
-                        time.sleep(48)
-                else:
-                    break
-
+            run_ecommerce(validate, 'Amazon', 'y')
         elif validate.choice == 2:
-            validate.ask_price()
-            user.desired_price = validate.desired_price
-            page = validate.ask_page()
-            if page:
-                product = ecommerce.Argos(page)
-                print(product.title())
-                print(product.price())
-                break
+            run_ecommerce(validate, 'argos')
         elif validate.choice == 3:
-            validate.ask_price()
-            user.desired_price = validate.desired_price
-            page = validate.ask_page()
-            if page:
-                product = ecommerce.Currys(page)
-                print(product.title())
-                print(product.price())
-                break
-        elif validate.choice == 0:
-            continue
+            run_ecommerce(validate, 'currys')
 
     if validate.choice == 2:
         print("\nEnter option: 1. Search keyword by href. | 2. Search keyword by custom html element. "
