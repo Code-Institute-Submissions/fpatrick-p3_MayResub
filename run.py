@@ -70,9 +70,9 @@ def run_ecommerce(validate, user, first='yes', av='n'):
                 exit()
             else:
                 print(f"\nFound: {user.title} for €{user.price}")
-                print("Querying again in 10 minutes. Stop terminal to stop running (Ctrl + C on linux).")
+                print("Querying again in 15 minutes. Stop terminal to stop running (Ctrl + C on linux).")
                 # Wait in seconds to repeat the loop and query price again
-                time.sleep(48)
+                time.sleep(900)
         else:
             # If page fail to load, break the loop and restart script.
             break
@@ -116,8 +116,8 @@ def run_query(validate, user, first='yes'):
                 exit()
             else:
                 print("\nResults not found.")
-                print("Querying again in 10 minutes. To Stop running, stop terminal (Ctrl + C on linux).")
-                time.sleep(48)
+                print("Querying again in 15 minutes. To Stop running, stop terminal (Ctrl + C on linux).")
+                time.sleep(900)
         else:
             break
 
