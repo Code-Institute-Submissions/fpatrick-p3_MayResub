@@ -79,8 +79,8 @@ class User:
             if last_tag != tag.text:
                 if tag['href'][0] == 'h':
                     self.html += f"<b>Title:</b> {tag.text}"
-                    self.html += f"<b>Url:</b> {tag['href']}"
                     self.html += f"<br>"
+                    self.html += f"<b>Url:</b> {tag['href']}"
                     last_tag = tag.text
         self.html += f"""                   
                         </p>
