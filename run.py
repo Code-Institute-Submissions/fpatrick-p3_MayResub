@@ -5,7 +5,7 @@ import time
 import pickle
 
 
-def run_ecommerce(validate, class_name, av='n'):
+def run_ecommerce(validate, user, class_name, av='n'):
     validate.ask_price()
     validate.ask_email()
 
@@ -21,7 +21,6 @@ def run_ecommerce(validate, class_name, av='n'):
             elif class_name == 'currys':
                 product = ecommerce.Currys(page)
             # Instance user class to store data and be able to retrieve later
-            user = action.User()
             user.url = validate.url
             user.title = product.title()
             user.desired_price = validate.desired_price
@@ -57,11 +56,16 @@ while True:
         validate.ask_choice(3)
         if validate.choice == 1:
             # Ask and validate a price
-            run_ecommerce(validate, 'Amazon', 'y')
+            user = action.User()
+            run_ecommerce(validate, user, 'Amazon', 'y')
         elif validate.choice == 2:
-            run_ecommerce(validate, 'argos')
+            user = action.User()
+            run_ecommerce(validate, user, 'argos')
         elif validate.choice == 3:
-            run_ecommerce(validate, 'currys')
+            user = action.User()
+            run_ecommerce(validate, user, 'currys')
+        elif validate.choice == 0:
+            continue
 
     if validate.choice == 2:
         print("\nEnter option: 1. Search keyword by href. | 2. Search keyword by custom html element. "
@@ -71,14 +75,27 @@ while True:
             page = validate.ask_page()
             if page:
                 user = action.User()
-                user.keyword = input("Please enter a keyword:\n")
+                user.keyword = input("Please enter a keyword:\n").lower()
                 user.url = validate.url
 
-                with open('last_query.obj', 'wb') as file:
-                    pickle.dump(user, file)
+                try:
+                    with open('last_query.obj', 'wb') as file:
+                        pickle.dump(user, file)
+                except:
+                    print("Warning: Error saving data.")
 
                 query = findany.Keyword(page, user.keyword)
-                query.find()
+                tags = query.find()
+                last_tag = None
+                if tags:
+                    for tag in tags:
+                        if last_tag != tag.text:
+                            print(f"\nFound: {tag.text}")
+                            print(f"Url: {tag['href']}")
+                            last_tag = tag.text
+                else:
+                    print("No tags found")
+
         elif validate.choice == 2:
             keyword = "key"
 
