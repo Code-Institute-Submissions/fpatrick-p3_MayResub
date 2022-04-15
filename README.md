@@ -24,7 +24,7 @@ Live link: https://wescraper.herokuapp.com/
     </br></br>
     ![Screenshot 2022-04-15 at 21 23 46](https://user-images.githubusercontent.com/39106404/163628660-22781f63-ebb7-48d3-8b55-0b980d2b1624.png)
    </br></br>
-  - Someone posted the deal I were waiting for
+  - Someone posted the deal I was waiting for
    </br></br>
     ![Screenshot 2022-04-15 at 20 49 29](https://user-images.githubusercontent.com/39106404/163628996-5dcb61ae-da33-4577-a48f-22ff2be2ce6e.png)
   </br></br>
