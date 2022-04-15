@@ -2,10 +2,10 @@
 
 Wescraper is an awesome script that scrapes websites to track prices or keywords. 
 
-Please read sections:
-  - Features and Use Cases
-  - Instructions to use
-  - Limitations
+**Please** read sections:
+  - _Features and Use Cases_
+  - _Instructions to use_
+  - _Limitations_
 
 Live link: https://wescraper.herokuapp.com/
 
@@ -51,15 +51,27 @@ Live link: https://wescraper.herokuapp.com/
 ### Feature 3: Repeat last query
 - __Use Case: I closed Wescraper and want to resume where I left__
   - Enter option 3, and it will start tracking price or looking for keyword
+  
 
+## Instructions to run Wescraper
 
+### Simplest - _Run web mock terminal_
+  Enter https://wescraper.herokuapp.com/
+### Terminal Linux - _Run directly_
+  * > Clone wescraper
+  * >cd to folder
+  * >python3 run.py
+    
+### **_Recommended way_**: CaS - Command and Script (Linux, Advanced users)
+* I developed a script called **CaS** https://github.com/fpatrick/cas
+* It runs scripts on background using screen
+* Use **CaS** to run **Wescraper** for as long as needed
 
+## Limitations
 
-
-
-### Features Left to Implement
-
-- The cards are made dynamically, many other tools or calculators can be added
+#### Websites can block Wescraper, especially if many query comes from same IP within a small-time frame
+#### Websites can block bots like Wescraper
+#### The SMTP server can only send a limited number of emails daily (around 100)
 
 ## Testing 
 
@@ -71,13 +83,13 @@ Live link: https://wescraper.herokuapp.com/
 
 ### Unfixed Bugs
 
-Bugs not found to date.
+Bugs not found.
 
 ## Deployment
 
 - This project was deployed using Code Institute's mock terminal for Heroku.
 
-- Steps for deployment.: 
+- Steps for deployment: 
   - Fork or clone this repository
   - Create a new Heroku app
   - Set the build packs to Python and NodeJS in that order
@@ -87,4 +99,6 @@ Bugs not found to date.
 
 ## Credits 
 
+- https://medium.com/@neonforge/how-to-send-emails-with-attachments-with-python-by-using-microsoft-outlook-or-office365-smtp-b20405c9e63a
+- https://www.journaldev.com/44473/scrape-amazon-product-information-beautiful-soup
 - Code Institute for the deployment terminal
