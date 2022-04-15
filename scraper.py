@@ -17,13 +17,7 @@ class Scrapping:
 
     def request_page(self, url):
 
-        r = requests.get(url, headers=self.headers)
-
-        with open('test.html', 'w') as f:
-            f.write(r.text)
-            f.close()
-
-        return r
+        return requests.get(url, headers=self.headers)
 
     def make_soup(self, url):
         page = self.request_page(url)

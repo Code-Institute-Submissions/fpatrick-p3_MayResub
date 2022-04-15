@@ -44,7 +44,7 @@ def run_ecommerce(validate, user, first='yes', av='n'):
                 if user.alert_price():
                     print("Price match successful. Email sent. Exiting application...")
                 else:
-                    print("Email couldn't be sent")
+                    print("Email couldn't be sent. Daily server limit reached? Exiting application...")
                 exit()
             else:
                 print(f"\nFound: {user.title} for €{user.price}")
@@ -84,7 +84,7 @@ def run_query(validate, user, first='yes'):
                 if user.alert_keyword(tags):
                     print("Keyword match successful. Email sent. Exiting application...")
                 else:
-                    print("Keyword match successful. But couldn't send email. Exiting application...")
+                    print("Keyword match successful. But couldn't send email. Daily server limit reached? Exiting application...")
                 exit()
             else:
                 print("\nResults not found.")
@@ -93,8 +93,12 @@ def run_query(validate, user, first='yes'):
         else:
             break
 
-print("Welcome to Wescraper \n")
-# While True to easily restart script
+
+print("********************************************************************")
+print("*                  Welcome to Wescraper v1.0.0                     *")
+print("*     Instructions and source: https://github.com/fpatrick/p3      *")
+print("********************************************************************")
+# Loop to easily restart script
 while True:
     print("\nEnter option: 1. Track e-commerces price. | 2. Advanced mode (keyword search) | 3. Repeat last query "
           "| 0. Exit")
@@ -139,7 +143,6 @@ while True:
                 user = pickle.load(file)
         except:
             print("\nError trying to retrieve last query!")
-
 
         if user.class_name == "amazon":
             run_ecommerce(validate, user, 'y', 'repeat')
