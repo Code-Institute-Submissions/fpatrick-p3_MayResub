@@ -5,19 +5,16 @@ class Keyword(scraper.Scrapping):
     """
 
     """
-    def __init__(self, **kwargs):
-        scraper.Scrapping.__init__(self, **kwargs)
-        self.url = kwargs["url"]
-        self.element = kwargs["element"]
-        self.attr = kwargs["attribute"]
-        self.name = kwargs["name"]
+    def __init__(self, soup, word):
+        scraper.Scrapping.__init__(self)
+        self.word = word
+        self.soup = soup
 
     def amazon(self):
         scraper.Scrapping.request_page(self)
         scraper.Scrapping.make_soup(self)
 
     def teste(self):
-        self.name = "aqui ganhou outro nome"
-        print(self.attr)
-        print(self.url)
-        print(self.name)
+        tags = self.soup.find_all('a', text=lambda t: t and self.word in t)
+        print(type(tags))
+        print(tags)

@@ -68,12 +68,9 @@ while True:
                 break
 
     if validate.choice == 2:
-        while True:
-            print("Passou na linha 1")
-            time.sleep(5)
-            print("passou linha 2")
-            time.sleep(5)
-            break
+        soup = validate.ask_page()
+        find = findany.Keyword(soup, "Firestick")
+        find.teste()
 
     if validate.choice == 0:
         break

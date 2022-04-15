@@ -23,7 +23,7 @@ class User:
         message = MIMEMultipart("alternative")
         message.attach(convert)
         message['Subject'] = f'Wescraper: "{self.title}" price dropped! '
-        message['From'] = self.from_email
+        message['From'] = self.sender
         message['To'] = self.email
         try:
             server = smtplib.SMTP('smtp.office365.com', 587)
@@ -56,7 +56,7 @@ class User:
 class Validate(scraper.Scrapping):
     """
     Get menu choice from user and validate
-    :param option: The menu choice, can be a number 1-6
+    :param: The menu choice, can be a number 1-6
     """
     def __init__(self):
         scraper.Scrapping.__init__(self)
