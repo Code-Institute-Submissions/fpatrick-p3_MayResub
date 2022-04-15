@@ -39,7 +39,6 @@ def run_ecommerce(validate, user, class_name, av='n'):
                 print("Querying again in 10 minutes. Stop terminal to stop running (Ctrl + C on linux).")
                 time.sleep(48)
         else:
-            print("\nError fetching the URL.")
             break
 
 print("Welcome to Wescraper \n")
@@ -50,7 +49,7 @@ while True:
     # Instance validations class
     validate = action.Validate()
     # Ask to pick a number, param limit number os choices
-    validate.ask_choice(2)
+    validate.ask_choice(3)
     if validate.choice == 1:
         print("\nEnter option: 1. Amazon. | 2. Argos | 3. Currys | 0. Restart Script")
         validate.ask_choice(3)
@@ -72,29 +71,41 @@ while True:
               "| 0. Restart Script")
         validate.ask_choice(2)
         if validate.choice == 1:
-            page = validate.ask_page()
-            if page:
-                user = action.User()
-                user.keyword = input("Please enter a keyword:\n").lower()
-                user.url = validate.url
-
-                try:
-                    with open('last_query.obj', 'wb') as file:
-                        pickle.dump(user, file)
-                except:
-                    print("Warning: Error saving data.")
-
-                query = findany.Keyword(page, user.keyword)
-                tags = query.find()
-                last_tag = None
-                if tags:
-                    for tag in tags:
-                        if last_tag != tag.text:
-                            print(f"\nFound: {tag.text}")
-                            print(f"Url: {tag['href']}")
-                            last_tag = tag.text
+            user = action.User()
+            user.keyword = input("Please enter a keyword:\n").lower()
+            validate.ask_email()
+            user.email = validate.email
+            while True:
+                page = validate.ask_page()
+                if page:
+                    user.url = validate.url
+                    try:
+                        with open('last_query.obj', 'wb') as file:
+                            pickle.dump(user, file)
+                    except:
+                        print("Warning: Error saving data to repeat query later. Script will continue normally")
+                        pass
+                    query = findany.Keyword(page, user.keyword)
+                    tags = query.find()
+                    last_tag = None
+                    if tags:
+                        for tag in tags:
+                            if last_tag != tag.text:
+                                if tag['href'][0] == 'h':
+                                    print(f"\nFound: {tag.text}")
+                                    print(f"Url: {tag['href']}")
+                                    last_tag = tag.text
+                        if user.alert_keyword(tags):
+                            print("Keyword match successful. Email sent. Exiting application...")
+                        else:
+                            print("Keyword match successful. But couldn't send email. Exiting application...")
+                        exit()
+                    else:
+                        print("\nResults not found.")
+                        print("Querying again in 10 minutes. To Stop running, stop terminal (Ctrl + C on linux).")
+                        time.sleep(48)
                 else:
-                    print("No tags found")
+                    break
 
         elif validate.choice == 2:
             keyword = "key"

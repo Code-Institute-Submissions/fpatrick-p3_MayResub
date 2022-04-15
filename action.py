@@ -19,11 +19,11 @@ class User:
         self.html = ""
         self.keyword = ""
 
-    def send_email(self):
+    def send_email(self, subject):
         convert = MIMEText(self.html, 'html')
         message = MIMEMultipart("alternative")
         message.attach(convert)
-        message['Subject'] = f'Wescraper: "{self.title}" price dropped! '
+        message['Subject'] = subject
         message['From'] = self.sender
         message['To'] = self.email
         try:
@@ -33,10 +33,13 @@ class User:
             server.login(self.sender, self.api)
             server.sendmail(self.sender, self.email, message.as_string())
             server.quit()
+            return True
         except:
             print(" ************ SMTP server connection error ************ ")
+            return False
 
     def alert_price(self):
+        subject = f'Wescraper: "{self.title}" price dropped! '
         self.html = f"""
                     <html>
                       <body>
@@ -51,7 +54,37 @@ class User:
                       </body>
                     </html>
                 """
-        self.send_email()
+        self.send_email(subject)
+
+    def alert_keyword(self, tags):
+        subject = f'Wescraper: Keywords found for "{self.keyword}"'
+        self.html = f"""
+                    <html>
+                      <body>
+                        <h2> Good news! Keywords were found. </h2>
+                        <p><b></b>
+                           You asked Wescraper to look for <b>{self.keyword}</b> in <b>{self.url}</b>.
+                           <br>
+                           <h3>Those keywords were found:</b></h3>
+                           <br>
+                    """
+        last_tag = None
+        for tag in tags:
+            if last_tag != tag.text:
+                if tag['href'][0] == 'h':
+                    self.html += f"<b>Title:</b> {tag.text}"
+                    self.html += f"<b>Url:</b> {tag['href']}"
+                    self.html += f"<br>"
+                    last_tag = tag.text
+        self.html += f"""                   
+                        </p>
+                      </body>
+                    </html>
+                """
+        if self.send_email(subject):
+            return True
+        else:
+            return False
 
 
 class Validate(scraper.Scrapping):
@@ -75,7 +108,7 @@ class Validate(scraper.Scrapping):
         while True:
             try:
                 self.choice = int(input(f"0-{limit}: "))
-                if self.choice > limit and self.choice != 9:
+                if self.choice > limit:
                     raise ValueError(
                         f"Please choose a number between 0 and {limit}! You provided {self.choice}"
                     )
@@ -94,7 +127,7 @@ class Validate(scraper.Scrapping):
     def ask_email(self):
         while True:
             try:
-                self.email = input("Please enter your email to receive alert on price drop: \n")
+                self.email = input("Please enter your email CAREFULLY to receive alert on price drop: \n")
                 return False
             except ValueError as e:
                 print(f"Invalid data! Please enter only numbers and try again. \n")
