@@ -128,6 +128,7 @@ class Validate(scraper.Scrapping):
                 print(f"Invalid data! Please enter only numbers and try again. \n")
 
     def ask_email(self):
+        print("* FYI: First email will arrive at spam folder. Mark it as secure. * ")
         while True:
             try:
                 self.email = input("Please enter your email CAREFULLY to receive alert on price drop: \n")
