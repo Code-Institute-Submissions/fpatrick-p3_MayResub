@@ -7,7 +7,8 @@ import pickle
 print("Welcome to Wescraper \n")
 # While True to easily restart script
 while True:
-    print("\nEnter option: 1. Track e-commerces price. | 2. Advanced mode (keyword search) | 0. Exit")
+    print("\nEnter option: 1. Track e-commerces price. | 2. Advanced mode (keyword search) | 3. Repeat last query "
+          "| 0. Exit")
     # Instance validations class
     validate = action.Validate()
     # Ask to pick a number, param limit number os choices
@@ -33,18 +34,16 @@ while True:
                     user.desired_price = validate.desired_price
                     user.email = validate.email
                     user.availability = product.availability()
-                    low_price = validate.check_price(product.price())
+                    low_price = validate.compare_price(product.price())
                     user.price = validate.price
                     if low_price:
-                        print("Low price, good")
+                        print(f"\nFound: {user.title} for €{user.price}")
+                        user.alert_price()
+                        print("Price match successful. Email sent. Exiting application...")
                         exit()
                     else:
-                        print("High price")
-                        print(f"title: {user.title}")
-                        print(f"price: {user.price}")
-                        print(f"desired: {user.desired_price}")
-                        print(f"email: {user.email}")
-
+                        print(f"\nFound: {user.title} for €{user.price}")
+                        print("Querying again in 10 minutes. Stop terminal to stop running (Ctrl + C on linux).")
                         time.sleep(48)
                 else:
                     break
@@ -71,7 +70,8 @@ while True:
             continue
 
     if validate.choice == 2:
-        print("\nEnter option: 1. Search keyword by href. | 2. Search keyword by custom html element. | 9. Repeat last keyword search | 0. Restart Script")
+        print("\nEnter option: 1. Search keyword by href. | 2. Search keyword by custom html element. "
+              "| 0. Restart Script")
         validate.ask_choice(2)
         if validate.choice == 1:
             page = validate.ask_page()
@@ -87,20 +87,22 @@ while True:
                 query.find()
         elif validate.choice == 2:
             keyword = "key"
-        elif validate.choice == 9:
-            try:
-                with open('last_query.obj', 'rb') as file:
-                    user = pickle.load(file)
-            except:
-                print("Deu ruim abrindo o arquivo la")
-                pass
-            validate.url = user.url
-            page = validate.ask_page()
-            if page:
-                query = findany.Keyword(page, user.keyword)
-                query.find()
+
         elif validate.choice == 0:
             continue
+
+    if validate.choice == 9:
+        try:
+            with open('last_query.obj', 'rb') as file:
+                user = pickle.load(file)
+        except:
+            print("Deu ruim abrindo o arquivo la")
+            pass
+        validate.url = user.url
+        page = validate.ask_page()
+        if page:
+            query = findany.Keyword(page, user.keyword)
+            query.find()
 
     if validate.choice == 0:
         break

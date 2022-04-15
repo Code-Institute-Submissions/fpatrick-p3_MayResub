@@ -44,7 +44,7 @@ class User:
                         <p><b></b>
                            You have been waiting to buy <b>{self.title}</b> for <b>€{self.desired_price}</b>.
                            <br>
-                           <h3>The price right now is <b>€{self.price}</b></h3>
+                           <h3>The price right now is <b>€{self.price}. {self.availability}</b></h3>
                            <br>
                            Time to run and buy it: <b>{self.url}</b>
                         </p>
@@ -108,7 +108,7 @@ class Validate(scraper.Scrapping):
             print(f"URL Couldn't be reached! Please verify and try again. \n")
             return False
 
-    def check_price(self, price):
+    def compare_price(self, price):
         price = price.replace('€', '')
         price = price.replace('£', '')
         self.price = float(price)
