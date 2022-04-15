@@ -6,13 +6,13 @@ import time
 print("Welcome to Wescraper \n")
 # While True to easily restart script
 while True:
-    print("Enter option: 1. Track e-commerces price. | 2. Advanced mode (keyword search) | 0. Exit")
+    print("\nEnter option: 1. Track e-commerces price. | 2. Advanced mode (keyword search) | 0. Exit")
     # Instance validations class
     validate = action.Validate()
     # Ask to pick a number, param limit number os choices
     validate.ask_choice(2)
     if validate.choice == 1:
-        print("Enter option: 1. Amazon. | 2. Argos | 3. Currys")
+        print("\nEnter option: 1. Amazon. | 2. Argos | 3. Currys | 0. Restart Script")
         validate.ask_choice(3)
         if validate.choice == 1:
             # Ask and validate a price
@@ -66,11 +66,19 @@ while True:
                 print(product.title())
                 print(product.price())
                 break
+        elif validate.choice == 0:
+            continue
 
     if validate.choice == 2:
-        soup = validate.ask_page()
-        find = findany.Keyword(soup, "Hello")
-        find.teste2()
+        print("\nEnter option: 1. Search keyword by href. | 2. Search keyword by custom html element. | 0. Restart Script")
+        validate.ask_choice(2)
+        if validate.choice == 1:
+            soup = validate.ask_page()
+            find = findany.Keyword(soup, "Hello")
+        elif validate.choice == 2:
+            keyword = "key"
+        elif validate.choice == 0:
+            continue
 
     if validate.choice == 0:
         break
