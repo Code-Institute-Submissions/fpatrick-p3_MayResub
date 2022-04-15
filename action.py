@@ -122,7 +122,7 @@ class Validate(scraper.Scrapping):
     def ask_price(self):
         while True:
             try:
-                self.desired_price = float(input("Please enter desired price: \n"))
+                self.desired_price = float(input("Please enter desired price (without symbols €) : \n"))
                 return False
             except ValueError as e:
                 print(f"Invalid data! Please enter only numbers and try again. \n")
