@@ -4,7 +4,7 @@ Wescraper is an awesome script that scrapes websites to track prices or keywords
 
 **Please** read sections:
   - _Features and Use Cases_
-  - _Instructions to use_
+  - _Instructions to run_
   - _Limitations_
 
 Live link: https://wescraper.herokuapp.com/
@@ -20,10 +20,11 @@ Live link: https://wescraper.herokuapp.com/
     </br></br>
     ![Screenshot 2022-04-15 at 21 21 41](https://user-images.githubusercontent.com/39106404/163628570-240c84a1-3c11-4940-8fe3-2eb70445842f.png)
     </br></br>
-  - Leave the script open (or use CaS, scroll down to know more). Every 15 minutes Wescraper will look again the website, to check if someone posted a apple watch deal
+  - Leave the script open (or use CaS, see Instructions section). Every 15 minutes Wescraper will look again the website, to check if someone posted a apple watch deal
+    </br></br>
     ![Screenshot 2022-04-15 at 21 23 46](https://user-images.githubusercontent.com/39106404/163628660-22781f63-ebb7-48d3-8b55-0b980d2b1624.png)
    </br></br>
-  - Someone posted the deal you were waiting for
+  - Someone posted the deal I were waiting for
    </br></br>
     ![Screenshot 2022-04-15 at 20 49 29](https://user-images.githubusercontent.com/39106404/163628996-5dcb61ae-da33-4577-a48f-22ff2be2ce6e.png)
   </br></br>
@@ -38,11 +39,15 @@ Live link: https://wescraper.herokuapp.com/
 ### Feature 2: Track price in big e-commerces websites
 - __Use Case: I want to buy a new specific TV in amazon uk, currys.ie or argos.ie__
     </br></br>
-  - Select option 1 Track price, then enter desired website option, desired price and product URL (copy and paste from browser)
-    </br></br>
-    ![Screenshot 2022-04-15 at 21 45 55](https://user-images.githubusercontent.com/39106404/163630610-922394b3-463e-4b0d-93bb-b647f9217693.png)
-    </br></br>
-  - Each 15 minutes Wescraper will verify if the product price is equal or lower than the price I want to pay and send a email when found
+  - Select option 1 Track price
+    - enter a e-commerce option (1 to 3)
+      - enter desired price (how much I want to pay)
+        - enter email
+          - enter product URL (copy and paste from browser)
+            </br></br>
+            ![Screenshot 2022-04-15 at 21 45 55](https://user-images.githubusercontent.com/39106404/163630610-922394b3-463e-4b0d-93bb-b647f9217693.png)
+            </br></br>
+  - Every 15 minutes Wescraper will verify if the product price is equal or lower than the price I want to pay and send a email when found
   </br></br>
     <img src="https://user-images.githubusercontent.com/39106404/163627348-7a0feb83-4fcd-4955-9cc7-01a2b6a8eb35.jpeg" width="300">
   </br></br>
@@ -53,19 +58,19 @@ Live link: https://wescraper.herokuapp.com/
   - Enter option 3, and it will start tracking price or looking for keyword
   
 
-## Instructions to run Wescraper
+## Instructions to run
 
 ### Simplest - _Run web mock terminal_
   Enter https://wescraper.herokuapp.com/
 ### Terminal Linux - _Run directly_
-  * > Clone wescraper
+  * > clone wescraper
   * >cd to folder
   * >python3 run.py
     
 ### **_Recommended way_**: CaS - Command and Script (Linux, Advanced users)
 * I developed a script called **CaS** https://github.com/fpatrick/cas
-* It runs scripts on background using screen
-* Use **CaS** to run **Wescraper** for as long as needed
+* It runs python3 scripts and bash commands in background using screen
+* Use **CaS** to run **Wescraper** in background for as long as needed
 
 ## Limitations
 
