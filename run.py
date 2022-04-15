@@ -5,7 +5,7 @@ import time
 import pickle
 
 
-def run_ecommerce(validate, user, class_name, av='n'):
+def run_ecommerce(validate, user, av='n'):
     validate.ask_price()
     validate.ask_email()
 
@@ -14,11 +14,11 @@ def run_ecommerce(validate, user, class_name, av='n'):
         page = validate.ask_page()
         # If not except
         if page:
-            if class_name == 'amazon':
+            if user.class_name == 'amazon':
                 product = ecommerce.Amazon(page)
-            elif class_name == 'argos':
+            elif user.class_name == 'argos':
                 product = ecommerce.Argos(page)
-            elif class_name == 'currys':
+            elif user.class_name == 'currys':
                 product = ecommerce.Currys(page)
             # Instance user class to store data and be able to retrieve later
             user.url = validate.url
@@ -99,31 +99,32 @@ while True:
         if validate.choice == 1:
             # Ask and validate a price
             user = action.User()
-            run_ecommerce(validate, user, 'Amazon', 'y')
+            user.class_name = 'amazon'
+            run_ecommerce(validate, user, 'y')
         elif validate.choice == 2:
             user = action.User()
-            run_ecommerce(validate, user, 'argos')
+            user.class_name = 'argos'
+            run_ecommerce(validate, user)
         elif validate.choice == 3:
             user = action.User()
-            run_ecommerce(validate, user, 'currys')
+            user.class_name = 'currys'
+            run_ecommerce(validate, user)
         elif validate.choice == 0:
             continue
 
     if validate.choice == 2:
-        print("\nEnter option: 1. Search keyword by href. | 2. Search keyword by custom html element. "
-              "| 0. Restart Script")
-        validate.ask_choice(2)
+        print("\nEnter option: 1. Search keyword by href. | 0. Restart Script")
+        print("* FYI: Select option 1 to query websites like hotukdeals.")
+        validate.ask_choice(1)
         if validate.choice == 1:
             user = action.User()
+            user.class_name = "keyword"
             run_query(validate, user)
-
-        elif validate.choice == 2:
-            keyword = "key"
 
         elif validate.choice == 0:
             continue
 
-    if validate.choice == 9:
+    if validate.choice == 3:
         try:
             with open('last_query.obj', 'rb') as file:
                 user = pickle.load(file)

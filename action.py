@@ -18,6 +18,7 @@ class User:
         self.email = ""
         self.html = ""
         self.keyword = ""
+        self.class_name = ""
 
     def send_email(self, subject):
         convert = MIMEText(self.html, 'html')
