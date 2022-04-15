@@ -5,9 +5,15 @@ import time
 import pickle
 
 
-def run_ecommerce(validate, user, av='n'):
-    validate.ask_price()
-    validate.ask_email()
+def run_ecommerce(validate, user, first='yes', av='n'):
+    if first == 'yes':
+        validate.ask_price()
+        user.desired_price = validate.desired_price
+        validate.ask_email()
+        user.email = validate.email
+    else:
+        validate.desired_price = user.desired_price
+        validate.url = user.url
 
     while True:
         # Ask url and return soup, receive false if except
@@ -23,9 +29,7 @@ def run_ecommerce(validate, user, av='n'):
             # Instance user class to store data and be able to retrieve later
             user.url = validate.url
             user.title = product.title()
-            user.desired_price = validate.desired_price
-            user.email = validate.email
-            if av == 'y':
+            if av == 'yes':
                 user.availability = product.availability()
             low_price = validate.compare_price(product.price())
             user.price = validate.price
@@ -37,8 +41,10 @@ def run_ecommerce(validate, user, av='n'):
                 pass
             if low_price:
                 print(f"\nFound: {user.title} for €{user.price}")
-                user.alert_price()
-                print("Price match successful. Email sent. Exiting application...")
+                if user.alert_price():
+                    print("Price match successful. Email sent. Exiting application...")
+                else:
+                    print("Email couldn't be sent")
                 exit()
             else:
                 print(f"\nFound: {user.title} for €{user.price}")
@@ -48,10 +54,13 @@ def run_ecommerce(validate, user, av='n'):
             break
 
 
-def run_query(validate, user):
-    user.keyword = input("Please enter a keyword:\n").lower()
-    validate.ask_email()
-    user.email = validate.email
+def run_query(validate, user, first='yes'):
+    if first == 'yes':
+        user.keyword = input("Please enter a keyword:\n").lower()
+        validate.ask_email()
+        user.email = validate.email
+    else:
+        validate.url = user.url
     while True:
         page = validate.ask_page()
         if page:
@@ -100,7 +109,7 @@ while True:
             # Ask and validate a price
             user = action.User()
             user.class_name = 'amazon'
-            run_ecommerce(validate, user, 'y')
+            run_ecommerce(validate, user, 'yes', 'yes')
         elif validate.choice == 2:
             user = action.User()
             user.class_name = 'argos'
@@ -129,13 +138,20 @@ while True:
             with open('last_query.obj', 'rb') as file:
                 user = pickle.load(file)
         except:
-            print("Deu ruim abrindo o arquivo la")
-            pass
-        validate.url = user.url
-        page = validate.ask_page()
-        if page:
-            query = findany.Keyword(page, user.keyword)
-            query.find()
+            print("\nError trying to retrieve last query!")
+
+
+        if user.class_name == "amazon":
+            run_ecommerce(validate, user, 'y', 'repeat')
+        elif user.class_name == "argos":
+            run_ecommerce(validate, user, 'repeat')
+        elif user.class_name == "currys":
+            run_ecommerce(validate, user, 'repeat')
+        elif user.class_name == "keyword":
+            run_query(validate, user, 'repeat')
+        else:
+            print("\nError running last query.")
+            continue
 
     if validate.choice == 0:
         break

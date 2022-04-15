@@ -145,7 +145,11 @@ class Validate(scraper.Scrapping):
     def compare_price(self, price):
         price = price.replace('€', '')
         price = price.replace('£', '')
-        self.price = float(price)
+        try:
+            self.price = float(price)
+        except ValueError as e:
+            print(f"\nError trying to convert price. The website may be blocking bot access.")
+            exit()
 
         if self.price <= self.desired_price:
             return True
