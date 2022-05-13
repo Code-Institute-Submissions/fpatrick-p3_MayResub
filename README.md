@@ -82,13 +82,23 @@ Live link: https://wescraper.herokuapp.com/
 
 ### Validator Testing 
 
-- PEP8
-  - No errors were returned from PEP8online.com
+- PEP8online.com
+  - Copy and paste the code of each .py (developed only for this application) into pep8online.com
+  - It returned message "All right" and no errors.
 
 
 ### Unfixed Bugs
 
-Bugs not found.
+- Emails can not be sent due to be a third party service (microsoft)
+- Websites can block access of bots
+
+## Libraries
+
+- The application was split into different .py to better organization of code
+- MIMEText and MIMEMultipart to send email with rich text
+- smtplib to get time and date needed to repeat query on websites
+- requests to get data from websites
+- BeautifulSoup to work on data coming from websites
 
 ## Deployment
 
