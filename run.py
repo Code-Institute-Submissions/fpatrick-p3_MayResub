@@ -48,7 +48,8 @@ def run_ecommerce(validate, user, first='yes', av='n'):
             # If availability field is there
             if av == 'yes':
                 user.availability = product.availability()
-            # Clean money symbol and compare desired price with actual price, true if price is lower than desired
+            # Clean money symbol and compare desired price with
+            # actual price, true if price is lower than desired
             low_price = validate.compare_price(product.price())
             # Store price that was validated
             user.price = validate.price
@@ -57,20 +58,24 @@ def run_ecommerce(validate, user, first='yes', av='n'):
                 with open('last_query.obj', 'wb') as file:
                     pickle.dump(user, file)
             except:
-                print("Warning: Error saving data to repeat query later. Script will continue normally")
+                print("Warning: Error saving data to repeat query later. "
+                      "Script will continue normally")
                 pass
 
             if low_price:
                 print(f"\nFound: {user.title} for €{user.price}")
                 # Send email with price alert, return true if it was successful
                 if user.alert_price():
-                    print("Price match successful. Email sent. Exiting application...")
+                    print("Price match successful. Email sent. "
+                          "Exiting application...")
                 else:
-                    print("Email couldn't be sent. Daily server limit reached? Exiting application...")
+                    print("Email couldn't be sent. "
+                          "Daily server limit reached? Exiting application...")
                 exit()
             else:
                 print(f"\nFound: {user.title} for €{user.price}")
-                print("Querying again in 15 minutes. Stop terminal to stop running (Ctrl + C on linux).")
+                print("Querying again in 15 minutes. "
+                      "Stop terminal to stop running (Ctrl + C on linux).")
                 # Wait in seconds to repeat the loop and query price again
                 time.sleep(900)
         else:
@@ -97,7 +102,8 @@ def run_query(validate, user, first='yes'):
                 with open('last_query.obj', 'wb') as file:
                     pickle.dump(user, file)
             except:
-                print("Warning: Error saving data to repeat query later. Script will continue normally")
+                print("Warning: Error saving data to repeat query later."
+                      " Script will continue normally")
                 pass
             query = findany.Keyword(page, user.keyword)
             tags = query.find()
@@ -110,13 +116,16 @@ def run_query(validate, user, first='yes'):
                             print(f"Url: {tag['href']}")
                             last_tag = tag.text
                 if user.alert_keyword(tags):
-                    print("Keyword match successful. Email sent. Exiting application...")
+                    print("Keyword match successful. "
+                          "Email sent. Exiting application...")
                 else:
-                    print("Keyword match successful. But couldn't send email. Daily server limit reached? Exiting application...")
+                    print("Keyword match successful. But couldn't send email. "
+                          "Daily server limit reached? Exiting application...")
                 exit()
             else:
                 print("\nResults not found.")
-                print("Querying again in 15 minutes. To Stop running, stop terminal (Ctrl + C on linux).")
+                print("Querying again in 15 minutes. "
+                      "To Stop running, stop terminal (Ctrl + C on linux).")
                 time.sleep(900)
         else:
             break
@@ -128,14 +137,16 @@ print("*     Instructions and source: https://github.com/fpatrick/p3      *")
 print("********************************************************************")
 # Loop to easily restart script
 while True:
-    print("\nEnter option: 1. Track e-commerces price. | 2. Advanced mode (keyword search) | 3. Repeat last query "
+    print("\nEnter option: 1. Track e-commerces price. | "
+          "2. Advanced mode (keyword search) | 3. Repeat last query "
           "| 0. Exit")
     # Instance validations class
     validate = action.Validate()
     # Ask to pick a number, param limit number os choices
     validate.ask_choice(3)
     if validate.choice == 1:
-        print("\nEnter option: 1. Amazon. | 2. Argos | 3. Currys | 0. Restart Script")
+        print("\nEnter option: 1. Amazon. | "
+              "2. Argos | 3. Currys | 0. Restart Script")
         validate.ask_choice(3)
         if validate.choice == 1:
             # Instance user class to store data and be able to retrieve later

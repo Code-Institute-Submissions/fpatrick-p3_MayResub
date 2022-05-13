@@ -1,6 +1,3 @@
-import scraper
-
-
 class Amazon:
     """
     Search amazon page for product name, price and availability
@@ -10,16 +7,20 @@ class Amazon:
 
     def title(self):
         try:
-            title = self.soup.find("span", attrs={"id": 'productTitle'}).string.strip()
+            title = self.soup.find("span",
+                                   attrs={"id": 'productTitle'}).string.strip()
         except AttributeError:
-            title = "Error getting the title. Is the product available?"
+            title = "Error getting the title. " \
+                    "Is the product available?"
 
         return title
 
     def price(self):
 
         try:
-            price = self.soup.find("span", attrs={'class': 'a-offscreen'}).string.strip()
+            price = self.soup.find("span",
+                                   attrs={'class': 'a-offscreen'}
+                                   ).string.strip()
 
         except AttributeError:
             price = "Error getting the price. Is the product available?"
@@ -55,7 +56,9 @@ class Argos:
     def price(self):
 
         try:
-            price = self.soup.find("span", attrs={'class': 'price'}).string.strip()
+            price = self.soup.find("span",
+                                   attrs={'class': 'price'}
+                                   ).string.strip()
 
         except AttributeError:
             price = "Error getting the price. Is the product available?"
@@ -70,7 +73,9 @@ class Currys:
 
     def title(self):
         try:
-            title = self.soup.find("div", attrs={"class": 'prd-name'}).string.strip()
+            title = self.soup.find("div",
+                                   attrs={"class": 'prd-name'}
+                                   ).string.strip()
         except AttributeError:
             title = ""
 
@@ -79,10 +84,11 @@ class Currys:
     def price(self):
 
         try:
-            price = self.soup.find("strong", attrs={'class': 'current'}).string.strip()
+            price = self.soup.find("strong",
+                                   attrs={'class': 'current'}
+                                   ).string.strip()
 
         except AttributeError:
             price = "Error getting the price. Is the product available?"
 
         return price
-
